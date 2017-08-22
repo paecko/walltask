@@ -7,9 +7,9 @@ import argparse
 import json
 
 # User has to store original wallpaper in folder 'wallpaper' with the filename 'wall.jpg'
-org_wall = 'wallpaper/wall.jpg'
+org_wall = 'wall.jpg'
 # Tasks will be drawn onto this file (will first be created as a copy of org_wall when tasks are added)
-new_wall = 'wallpaper/task_wall.jpg'
+new_wall = 'task_wall.jpg'
 
 try:
     rf = open('data.json', 'r')
