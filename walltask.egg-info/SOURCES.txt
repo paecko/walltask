@@ -1,6 +1,0 @@
-walltask.py
-walltask.egg-info/PKG-INFO
-walltask.egg-info/SOURCES.txt
-walltask.egg-info/dependency_links.txt
-walltask.egg-info/entry_points.txt
-walltask.egg-info/top_level.txt
