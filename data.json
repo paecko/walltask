@@ -1,6 +1,9 @@
 {
+    "fontsize": 30,
+    "xpos": 600,
     "colour": "white",
     "tasks": [],
-    "xpos": 600,
-    "fontsize": 30
+    "font": [
+        "28"
+    ]
 }

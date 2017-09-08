@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 import ctypes
-import os, sys
-from shutil import copyfile
-from PIL import Image, ImageFont, ImageDraw
+import os
+import sys
 import argparse
 import json
+from PIL import Image, ImageFont, ImageDraw
 
-# User has to store original wallpaper in folder 'wallpaper' with the filename 'wall.jpg'
+# User has to store current wallpaper in package directory
 org_wall = 'wall.jpg'
 # Tasks will be drawn onto this file (will first be created as a copy of org_wall when tasks are added)
 new_wall = 'task_wall.jpg'
+
 
 try:
     rf = open('data.json', 'r')
@@ -24,11 +25,16 @@ except FileNotFoundError:
 # Is used throughout this program to access the tasks, settings in json file and update them
 data = json.load(rf)
 
+
 def create_wallpaper():
     ''' Create a new wallpaper by accessing tasks list in data dict loaded from json file. Is called when tasks are added or removed from json file'''
 
     # Open org_wall. Tasks will be drawn on contents of this image and will be saved to new_wall without affecting org_wall
-    wall = Image.open(org_wall)
+    try:
+        wall = Image.open(org_wall)
+    except FileNotFoundError:
+        print("Wallpaper image not found in package directory")
+        quit()
     draw = ImageDraw.Draw(wall)
     fontsize = int(data['fontsize'])
     font = ImageFont.truetype('arial.ttf', fontsize)
@@ -49,10 +55,15 @@ def create_wallpaper():
     # Save changed image to new_wall, leaving the org_wall unaffected
     wall.save(new_wall)
 
+
 def update_wallpaper(file):
     '''Sets a new desktop background'''
     SPI_SETDESKWALLPAPER = 20
-    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, file, 0)
+    SPIF_UPDATEINIFILE = 1
+    if os.path.isfile(file):
+        ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, file, SPIF_UPDATEINIFILE)
+    else:
+        print("File does not exist")
 
 def add(added_tasks):
     ''' Adds tasks to data dict. added_tasks is a list from taking in arguments in the commandline from user.'''
@@ -67,6 +78,7 @@ def add(added_tasks):
     # Return updated data dict which will be saved to data.json in main() and then new wallpaper is created with new data
     return data
 
+
 def remove(ids):
     # Reverse sorted ids list since am removing from data['tasks] by index. If args were not reversed; ex:[2,5], After removing 2 first would result in
     # abrupt IndexError since index 5 would no longer exist
@@ -79,6 +91,7 @@ def remove(ids):
     # If user provides an index that has not been assigned to a task.
     except IndexError:
         print("There does not exist a task with atleast one of the indexes you provided")
+
 
 def clear_tasks():
     ''' Clears all tasks from data.json and subsequently the wallpaper'''
@@ -96,6 +109,7 @@ def clear_tasks():
     # If file 'new_wall' is not found, the user has already cleared tasks by removing new_wall
     except FileNotFoundError:
         print('You have already cleared all your tasks.')
+
 
 def main():
     parser = argparse.ArgumentParser(description='Add or remove tasks to your wallpaper')
@@ -120,7 +134,7 @@ def main():
         if args.colour:
             data['colour'] = args.colour
         if args.fontsize:
-            data['font'] = args.font
+            data['font'] = args.fontsize
 
         with open('data.json', 'w') as wf:
             json.dump(updated_data, wf, indent=4)
@@ -131,6 +145,7 @@ def main():
 
     if args.clear:
         clear_tasks()
+
 
 if __name__ == '__main__':
     main()
