@@ -1,6 +1,12 @@
-__pycache__
-venv/
-walltask.egg-info/
-dist/
-wall.
+.installed.cfg
+bin
+develop-eggs
+dist
+downloads
+eggs
+parts
+src/*.egg-info
+lib
+lib64
 *.jpg
+
