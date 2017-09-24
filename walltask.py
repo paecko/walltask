@@ -112,7 +112,6 @@ def clear_tasks():
 
 def main():
     parser = argparse.ArgumentParser(description='Add or remove tasks to your wallpaper')
-    parser.add_argument('-d', '--directory', help='You have to copy and paste the directory where your wallpaper is stored')
     parser.add_argument('-a', '--add', nargs='*', help='Add tasks to wallpaper')
     parser.add_argument('-c', '--clear', help='Clear all of your tasks', action='store_true')
     parser.add_argument('-r', '--remove', nargs='*', type=int, help='Remove a task by id')
