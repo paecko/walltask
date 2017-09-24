@@ -1,8 +1,8 @@
 {
+    "tasks": [],
+    "colour": "white",
     "fontsize": 30,
     "xpos": 600,
-    "colour": "white",
-    "tasks": [],
     "font": [
         "28"
     ]

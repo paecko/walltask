@@ -1,3 +1,6 @@
 venv/
 walltask.egg-info/
 dist/
+wall.
+*.jpg
+

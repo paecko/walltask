@@ -6,11 +6,8 @@ import argparse
 import json
 from PIL import Image, ImageFont, ImageDraw
 
-# User has to store current wallpaper in package directory
 org_wall = 'wall.jpg'
-# Tasks will be drawn onto this file (will first be created as a copy of org_wall when tasks are added)
 new_wall = 'task_wall.jpg'
-
 
 try:
     rf = open('data.json', 'r')
@@ -30,11 +27,13 @@ def create_wallpaper():
     ''' Create a new wallpaper by accessing tasks list in data dict loaded from json file. Is called when tasks are added or removed from json file'''
 
     # Open org_wall. Tasks will be drawn on contents of this image and will be saved to new_wall without affecting org_wall
+
     try:
         wall = Image.open(org_wall)
     except FileNotFoundError:
-        print("Wallpaper image not found in package directory")
-        quit()
+        print("Name your wallpaper 'wall' and store in script directory")
+        exit()
+
     draw = ImageDraw.Draw(wall)
     fontsize = int(data['fontsize'])
     font = ImageFont.truetype('arial.ttf', fontsize)
@@ -113,6 +112,7 @@ def clear_tasks():
 
 def main():
     parser = argparse.ArgumentParser(description='Add or remove tasks to your wallpaper')
+    parser.add_argument('-d', '--directory', help='You have to copy and paste the directory where your wallpaper is stored')
     parser.add_argument('-a', '--add', nargs='*', help='Add tasks to wallpaper')
     parser.add_argument('-c', '--clear', help='Clear all of your tasks', action='store_true')
     parser.add_argument('-r', '--remove', nargs='*', type=int, help='Remove a task by id')
@@ -146,6 +146,5 @@ def main():
     if args.clear:
         clear_tasks()
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
