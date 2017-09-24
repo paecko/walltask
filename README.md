@@ -2,12 +2,9 @@ Simple CLI that allows you to add & remove tasks onto desktop wallpaper.
 
 Store current wallpaper into the directory of the script.
 
-##Usage
-walltask.py [-h] [-a [ADD [ADD ...]]] [-c] [-r [REMOVE [REMOVE ...]]]
-                   [-m MARGIN] [-cl COLOUR] [-fs FONTSIZE]
+## Arguments:
+  -h, --help            show this help message and exit<br />
 
-
-optional arguments:
   -a [ADD [ADD ...]], --add [ADD [ADD ...]]
                         Add tasks to wallpaper<br />
   -c, --clear           Clear all of your tasks<br />
